@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  python:
+    init: true
+    container_name: website
+    build: ./images/Python
+    ports:
+      - "8000:8000"
+    restart: always
+    networks:
+      - ft_network
+
+networks:
+  ft_network:
+        driver: bridge
