@@ -5,8 +5,30 @@ services:
     init: true
     container_name: website
     build: ./images/Python
+    env_file:
+      - /home/erik/Desktop/transcedance/srcs/.env
+    environment:
+      - POSTGRES_USER=${MYSQL_USER}
+      - POSTGRES_PASSWORD=${MYSQL_PASSWORD}
+      - POSTGRES_DB=${MYSQL_DATABASE}
     ports:
       - "8000:8000"
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - ft_network
+
+  database:
+    image: postgres
+    init: true
+    container_name: database
+    env_file:
+      - /home/erik/Desktop/transcedance/srcs/.env
+    environment:
+      - POSTGRES_USER=${MYSQL_USER}
+      - POSTGRES_PASSWORD=${MYSQL_PASSWORD}
+      - POSTGRES_DB=${MYSQL_DATABASE
     restart: always
     networks:
       - ft_network

@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,7 +27,14 @@ SECRET_KEY = 'django-insecure-s+jde9vguzpf691gab(x=j1^e8c#l#$4$8$ur0=r)zs9@**2n(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True # Only enable if an SSL key is generated
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -76,8 +85,12 @@ WSGI_APPLICATION = 'trans.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv('MYSQL_DATABASE'),
+        "USER": os.getenv('MYSQL_USER'),
+        "PASSWORD": os.getenv('MYSQL_PASSWORD'),
+        "HOST": "Database",
+        "PORT": 5432,
     }
 }
 

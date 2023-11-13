@@ -1,5 +1,9 @@
 from django.shortcuts import render, HttpResponse
+import os
 
-# Create your views here.
 def home(request):
-	return HttpResponse("hello world")
+    database_name = os.getenv('MYSQL_DATABASE')
+    return HttpResponse(database_name)
+
+def	test(request):
+	return HttpResponse("I hate this garbage project")
